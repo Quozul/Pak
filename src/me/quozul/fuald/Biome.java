@@ -50,4 +50,12 @@ public class Biome {
     public List<Entity> getEntities() {
         return this.BIOME_ENTITIES;
     }
+
+    public List<Entity> getEntitiesCopy() {
+        List<Entity> entities = new ArrayList<>();
+        for (Entity entity : this.BIOME_ENTITIES)
+            entities.add(entity);
+
+        return entities;
+    }
 }

@@ -1,9 +1,13 @@
 package me.quozul.fuald;
 
+import me.quozul.fuald.items.Item;
+import me.quozul.fuald.loots.LootInventory;
+import me.quozul.fuald.loots.LootStack;
 import me.quozul.fuald.swingui.JavaSwing;
 
 public class Main {
     public static Game game;
+    public static JavaSwing UI;
 
     public static void main(String[] args) {
         Biome biome = new Biome();
@@ -13,23 +17,22 @@ public class Main {
         Item steak = new Item("Steak");
         steak.setMaxStack(4);
 
-        Inventory coige_inv = new Inventory();
+        LootInventory coige_inv = new LootInventory();
 
-        coige_inv.addItemStacks(
-                new ItemStack(porkshop, 2),
-                new ItemStack(steak, 1)
+        coige_inv.addLootStacks(
+                new LootStack(porkshop, 2, 0.5f),
+                new LootStack(steak, 1, 1f)
         );
 
         biome.registerEntity(
-                new Entity("Pig", 10, new Inventory(1, new ItemStack(porkshop, 1))),
-                new Entity("Cow", 12, new Inventory(1, new ItemStack(steak, 2))),
+                new Entity("Pig", 10, new LootInventory(new LootStack(porkshop, 1, 1f))),
+                new Entity("Cow", 12, new LootInventory(new LootStack(steak, 2, 0.75f))),
                 new Entity("Coige", 24, coige_inv)
         );
 
         Main.game = new Game(biome);
         game.setBiome(biome);
 
-        JavaSwing UI = new JavaSwing();
-        Main.game.addNewTurnStartedListener(UI);
+        UI = new JavaSwing();
     }
 }

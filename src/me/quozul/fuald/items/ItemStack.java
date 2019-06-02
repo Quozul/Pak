@@ -1,4 +1,4 @@
-package me.quozul.fuald;
+package me.quozul.fuald.items;
 
 public class ItemStack {
     private Item ITEM;
@@ -55,6 +55,10 @@ public class ItemStack {
         this.AMOUNT = amount;
     }
 
+    /**
+     * Add the specified amount
+     * @param amount
+     */
     public void addAmount(int amount) {
         this.AMOUNT += amount;
     }

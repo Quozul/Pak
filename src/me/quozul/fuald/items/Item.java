@@ -1,8 +1,12 @@
-package me.quozul.fuald;
+package me.quozul.fuald.items;
+
+import me.quozul.fuald.enums.ItemType;
 
 public class Item {
     private String NAME;
-    private int MAX_STACK;
+    private int MAX_STACK = 32767;
+    private ItemType ITEM_TYPE = ItemType.USELESS;
+    private int ATTACK_DAMAGE = 0;
 
     /**
      * Create a new Item object for the game
@@ -35,5 +39,21 @@ public class Item {
      */
     public String getName() {
         return NAME;
+    }
+
+    public void setType(ItemType itemType) {
+        this.ITEM_TYPE = itemType;
+    }
+
+    public ItemType getItemType() {
+        return this.ITEM_TYPE;
+    }
+
+    public int getAttackDamage() {
+        return this.ATTACK_DAMAGE;
+    }
+
+    public void setAttackDamage(int damage) {
+        this.ATTACK_DAMAGE = damage;
     }
 }
