@@ -5,7 +5,6 @@ import me.quozul.fuald.events.AttackEvent;
 import me.quozul.fuald.events.DeathEvent;
 import me.quozul.fuald.items.Inventory;
 import me.quozul.fuald.items.Item;
-import me.quozul.fuald.items.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +49,9 @@ public class Turn {
      * @param item the item used by the attacker to attack the victim
      */
     public void attack(Entity attacker, Entity victim, Item item) {
+        if (victim.getHealth() <= 0)
+            return;
+
         // remove health from entity on attack
         if (item.getItemType() == ItemType.WEAPON)
             victim.addHealth(-item.getAttackDamage());

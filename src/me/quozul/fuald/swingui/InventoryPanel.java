@@ -18,6 +18,7 @@ public class InventoryPanel extends JPanel {
         this.add(new InventoryList());
         this.add(new DropButton());
         this.add(new AttackButton());
+        this.add(new InformationsButton());
         this.setBorder(BorderFactory.createTitledBorder("Inventory"));
     }
 }
@@ -115,6 +116,37 @@ class AttackButton extends JButton implements MouseListener {
         Item attackItem = (game.getPlayer().getInventory().getItemStacks().size() > 0) ?
                 game.getPlayer().getInventory().getSelectedItemStack().getItem() : new Item("Fists");
         game.getTurn().attack(game.getPlayer(), game.getTurn().getEntity(), attackItem);
+    }
+
+    public void mouseEntered(MouseEvent event) {
+
+    }
+
+    public void mouseExited(MouseEvent event) {
+
+    }
+
+    public void mousePressed(MouseEvent event) {
+
+    }
+
+    public void mouseReleased(MouseEvent event) {
+
+    }
+}
+
+class InformationsButton extends JButton implements MouseListener {
+    public InformationsButton() {
+        super("Informations");
+        this.addMouseListener(this);
+    }
+
+    public void mouseClicked(MouseEvent event) {
+        Game game = Main.game;
+
+        ItemStack selectedItem = (game.getPlayer().getInventory().getItemStacks().size() > 0) ?
+                game.getPlayer().getInventory().getSelectedItemStack() : new ItemStack(new Item("Fists"), 1);
+        new ItemFrame(selectedItem);
     }
 
     public void mouseEntered(MouseEvent event) {

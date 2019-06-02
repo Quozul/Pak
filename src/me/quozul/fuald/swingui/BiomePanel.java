@@ -80,8 +80,7 @@ class CollectButton extends JButton implements MouseListener {
 
         ItemStack selectedItemStack = player.getCollectables().getSelectedItemStack();
 
-        player.getInventory().addItemStack(selectedItemStack);
-        player.getCollectables().removeItemStack(selectedItemStack);
+        player.getCollectables().moveItemStackTo(selectedItemStack, player.getInventory());
     }
 
     public void mouseEntered(MouseEvent event) {

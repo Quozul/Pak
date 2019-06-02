@@ -28,17 +28,25 @@ public class JavaSwing extends JFrame implements DeathEvent {
     }
 
     private JPanel buildContentPane() {
+        // inventory panel
+        JPanel inventoryPanel = new JPanel();
+        inventoryPanel.setLayout(new BoxLayout(inventoryPanel, BoxLayout.Y_AXIS));
+        inventoryPanel.setBackground(new Color(224, 235, 255));
+
+        inventoryPanel.add(new InventoryPanel());
+        inventoryPanel.add(new BiomePanel());
+
+        // main panel
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
-        mainPanel.setBackground(new Color(255, 255, 255));
+        mainPanel.setBackground(new Color(248, 255, 232));
 
         JPanel controlPanel = new JPanel();
         controlPanel.add(new NewTurnButton());
         mainPanel.add(controlPanel);
 
         mainPanel.add(new EntityPanel());
-        mainPanel.add(new InventoryPanel());
-        mainPanel.add(new BiomePanel());
+        mainPanel.add(inventoryPanel);
 
         System.out.println("Panels built");
 

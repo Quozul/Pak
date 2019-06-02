@@ -1,6 +1,8 @@
 package me.quozul.fuald;
 
 import me.quozul.fuald.enums.ItemType;
+import me.quozul.fuald.events.AttackEvent;
+import me.quozul.fuald.events.DeathEvent;
 import me.quozul.fuald.events.NewTurnEvent;
 import me.quozul.fuald.items.Inventory;
 import me.quozul.fuald.items.Item;
@@ -9,12 +11,33 @@ import me.quozul.fuald.items.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Game {
+public class Game implements DeathEvent, AttackEvent{
     // listener
     public List<NewTurnEvent> listeners = new ArrayList<>();
-
     public void addNewTurnStartedListener(NewTurnEvent listener) {
         listeners.add(listener);
+    }
+
+    public List<DeathEvent> deathEventListener = new ArrayList<>();
+    public void addDeathEventListener(DeathEvent listener) {
+        deathEventListener.add(listener);
+    }
+
+    public List<AttackEvent> attackEventListener = new ArrayList<>();
+    public void addAttackEventListener(AttackEvent listener) {
+        attackEventListener.add(listener);
+    }
+
+    @Override
+    public void onEntityDie(Entity killer, Entity victim) {
+        for (DeathEvent deathEventListener : deathEventListener)
+            deathEventListener.onEntityDie(killer, victim);
+    }
+
+    @Override
+    public void onDamageDealt(Entity attacker, Entity victim) {
+        for (AttackEvent attackEventListener : attackEventListener)
+            attackEventListener.onDamageDealt(attacker, victim);
     }
 
     // game logic
@@ -41,7 +64,8 @@ public class Game {
         this.getPlayer().getCollectables().empty();
 
         // register listeners
-        TURN.addDeathEventListener(Main.UI);
+        TURN.addDeathEventListener(this);
+        TURN.addAttackEventListener(this);
 
         for (NewTurnEvent listener : listeners)
             listener.onNewTurnStarted(TURN);

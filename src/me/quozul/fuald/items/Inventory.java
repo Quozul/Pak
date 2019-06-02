@@ -154,7 +154,10 @@ public class Inventory {
             }
 
             if (containItem) {
-                this.ITEMS.get(index).addAmount(-itemStack.getAmount());
+                ItemStack itemStack1 = this.ITEMS.get(index);
+                itemStack1.addAmount(-itemStack.getAmount());
+                if (itemStack1.getAmount() <= 0)
+                    this.ITEMS.remove(itemStack1);
                 success = true;
             }
         }
@@ -220,9 +223,8 @@ public class Inventory {
      * @param inventory Inventory to move ItemStack to
      */
     public void moveItemStackTo(ItemStack itemStack, Inventory inventory) {
-        boolean itemRemoved = this.removeItemStack(itemStack);
+        int itemsAdded = inventory.addItemStack(itemStack);
 
-        if (itemRemoved)
-            inventory.addItemStack(itemStack);
+        this.removeItemStack(new ItemStack(itemStack.getItem(), itemsAdded));
     }
 }

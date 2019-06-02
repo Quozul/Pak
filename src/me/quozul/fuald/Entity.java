@@ -1,5 +1,6 @@
 package me.quozul.fuald;
 
+import me.quozul.fuald.enums.EntityType;
 import me.quozul.fuald.items.Inventory;
 import me.quozul.fuald.loots.LootInventory;
 
@@ -7,7 +8,10 @@ public class Entity implements Cloneable {
     private Inventory INVENTORY;
     private LootInventory LOOT_INVENTORY;
     private int HEALTH;
+    private int START_HEALTH;
     private String NAME;
+    private boolean TAMABLE = false;
+    private EntityType TYPE = EntityType.NEUTRAL;
 
     private static final int DEFAULT_HEALTH = 10;
 
@@ -23,6 +27,7 @@ public class Entity implements Cloneable {
         this.HEALTH = health;
         this.INVENTORY = inventory;
         this.LOOT_INVENTORY = loot_inventory;
+        this.START_HEALTH = this.HEALTH;
     }
 
     public Entity(String name, int health, LootInventory inventory) {
@@ -30,6 +35,7 @@ public class Entity implements Cloneable {
         this.HEALTH = health;
         this.INVENTORY = new Inventory();
         this.LOOT_INVENTORY = inventory;
+        this.START_HEALTH = this.HEALTH;
     }
 
     public Entity(String name, int health) {
@@ -37,6 +43,7 @@ public class Entity implements Cloneable {
         this.HEALTH = health;
         this.INVENTORY = new Inventory();
         this.LOOT_INVENTORY = new LootInventory();
+        this.START_HEALTH = this.HEALTH;
     }
 
     /**
@@ -47,6 +54,7 @@ public class Entity implements Cloneable {
         this.HEALTH = DEFAULT_HEALTH;
         this.INVENTORY = new Inventory();
         this.LOOT_INVENTORY = new LootInventory();
+        this.START_HEALTH = this.HEALTH;
     }
 
     /**
@@ -63,6 +71,10 @@ public class Entity implements Cloneable {
      */
     public void setHealth(int new_health) {
         this.HEALTH = new_health;
+    }
+
+    public int getStartHealth() {
+        return this.START_HEALTH;
     }
 
     /**
@@ -107,12 +119,24 @@ public class Entity implements Cloneable {
         return this.NAME;
     }
 
+    public void setType(EntityType type) {
+        this.TYPE = type;
+    }
+
+    public EntityType getType() {
+        return this.TYPE;
+    }
+
     /**
      * Return if the entity can be whether tamed or not
      * @return boolean
      */
-    public boolean isTameable() {
+    public boolean isTamable() {
         return false;
+    }
+
+    public void setTamable(boolean tamable) {
+        this.TAMABLE = tamable;
     }
 
     /**
