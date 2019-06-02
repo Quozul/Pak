@@ -1,14 +1,19 @@
 package me.quozul.fuald.swingui;
 
+import me.quozul.fuald.Biome;
 import me.quozul.fuald.Game;
 import me.quozul.fuald.Main;
 import me.quozul.fuald.Player;
 import me.quozul.fuald.enums.InventoryType;
+import me.quozul.fuald.events.BiomeChangedEvent;
 import me.quozul.fuald.events.InventoryChangedEvent;
 import me.quozul.fuald.items.Inventory;
 import me.quozul.fuald.items.ItemStack;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -16,6 +21,7 @@ public class BiomePanel extends JPanel {
     public BiomePanel() {
         this.add(new LootInventory());
         this.add(new CollectButton());
+        this.add(new BiomeName());
         this.setBorder(BorderFactory.createTitledBorder("Biome"));
     }
 }
@@ -97,5 +103,74 @@ class CollectButton extends JButton implements MouseListener {
 
     public void mouseReleased(MouseEvent event) {
 
+    }
+}
+
+class BiomeName extends JLabel implements BiomeChangedEvent {
+    public BiomeName() {
+        this.setText("Not in a biome... yet");
+        Main.game.addBiomeChangedEventListener(this);
+    }
+
+    @Override
+    public void onBiomeChanged(Biome new_biome) {
+        String biomeName = new_biome.getName();
+        this.setText("Current biome: " + biomeName);
+        new BiomeChangedAnnouncement(biomeName);
+    }
+}
+
+class BiomeChangedAnnouncement extends JDialog {
+    final BiomeChangedAnnouncement frame = this;
+
+    public BiomeChangedAnnouncement(String biomeName) {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
+
+        this.setSize(400, 300);
+        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        this.setContentPane(this.buildContentPane(biomeName));
+        this.setAlwaysOnTop(true);
+        this.setUndecorated(true);
+        this.setVisible(true);
+
+        frame.addFocusListener(new FocusListener() {
+            private boolean gained = false;
+
+            @Override
+            public void focusGained(FocusEvent e) {
+                gained = true;
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (gained) {
+                    frame.dispose();
+                }
+            }
+        });
+    }
+
+    public JPanel buildContentPane(String biomeName) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBackground(new Color(255, 194, 106));
+
+        Font f = new Font("serif", Font.PLAIN, 24);
+        JLabel newBiome = new JLabel("New biome entered!");
+        newBiome.setFont(f);
+
+        //TODO center and vertical align text
+        JLabel biomeNameLabel = new JLabel(biomeName);
+        biomeNameLabel.setLayout(new GridBagLayout());
+
+        panel.add(newBiome);
+        panel.add(biomeNameLabel);
+
+        return panel;
     }
 }

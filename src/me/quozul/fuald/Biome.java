@@ -5,17 +5,20 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Biome {
-    private String BIOME_NAME = "";
+    private String NAME = "";
+    private float SIZE = 0.5f;
     private List<Entity> BIOME_ENTITIES = new ArrayList<>();
+    //TODO add Biome elements (benches, ...)
 
     /**
      * Creates a new biome
      * @param name name of the biome
      * @param entities entities that spawns in the biome
      */
-    public Biome(String name, Entity... entities) {
+    public Biome(String name, int size, Entity... entities) {
         this.setName(name);
         this.registerEntity(entities);
+        this.setSize(size);
     }
 
     /**
@@ -28,7 +31,7 @@ public class Biome {
      * @return
      */
     public String getName() {
-        return BIOME_NAME;
+        return NAME;
     }
 
     /**
@@ -36,7 +39,7 @@ public class Biome {
      * @param name
      */
     public void setName(String name) {
-        BIOME_NAME = name;
+        NAME = name;
     }
 
     /**
@@ -51,11 +54,11 @@ public class Biome {
         return this.BIOME_ENTITIES;
     }
 
-    public List<Entity> getEntitiesCopy() {
-        List<Entity> entities = new ArrayList<>();
-        for (Entity entity : this.BIOME_ENTITIES)
-            entities.add(entity);
+    public void setSize(float size) {
+        this.SIZE = size;
+    }
 
-        return entities;
+    public float getSize() {
+        return this.SIZE;
     }
 }
