@@ -46,7 +46,7 @@ class InventoryList extends JList implements MouseListener, InventoryChangedEven
         }
 
         this.setModel(dlm);
-    }
+}
 
     public void mouseClicked(MouseEvent event) {
         Game game = Main.game;

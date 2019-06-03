@@ -1,5 +1,6 @@
 package me.quozul.fuald.loots;
 
+import me.quozul.fuald.enums.Rarity;
 import me.quozul.fuald.items.Item;
 import me.quozul.fuald.items.ItemStack;
 
@@ -17,5 +18,9 @@ public class LootStack extends ItemStack {
 
     public void setChance(int chance) {
         this.CHANCE = chance;
+    }
+
+    public void setChance(Rarity chance) {
+        this.CHANCE = chance.label;
     }
 }

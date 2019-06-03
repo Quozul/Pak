@@ -65,18 +65,20 @@ public class Game implements DeathEvent, AttackEvent{
     }
 
     public void nextTurn() {
-        if (BIOME == null) {
+        if (BIOME == null) { // if no biome is set currently
             BIOME = BIOMES.get(new Random().nextInt(BIOMES.size()));
 
             for (BiomeChangedEvent listener : BiomeChangedEventListeners)
                 listener.onBiomeChanged(BIOME);
-        } else if (BIOME.getSize() < Math.random()) {
-            BIOME = BIOMES.get(new Random().nextInt(BIOMES.size()));
+        } else if (BIOME.getSize() < Math.random()) { // random chance to leave the current biome
+            Biome newBiome = BIOMES.get(new Random().nextInt(BIOMES.size()));
+            if (newBiome != this.BIOME) { // if the new biome is different from the current one
+                BIOME = BIOMES.get(new Random().nextInt(BIOMES.size()));
 
-            for (BiomeChangedEvent listener : BiomeChangedEventListeners)
-                listener.onBiomeChanged(BIOME);
+                for (BiomeChangedEvent listener : BiomeChangedEventListeners)
+                    listener.onBiomeChanged(BIOME);
+            }
         }
-
 
         TURN = new Turn(BIOME);
         System.out.println("New turn started");
@@ -108,8 +110,5 @@ public class Game implements DeathEvent, AttackEvent{
 
     public void registerBiomes(List<Biome> biomes) {
         BIOMES = biomes;
-        for (Biome biome : biomes) {
-            System.out.println(biome.getName());
-        }
     }
 }

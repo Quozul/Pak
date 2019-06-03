@@ -22,6 +22,8 @@ public class BiomePanel extends JPanel {
         this.add(new LootInventory());
         this.add(new CollectButton());
         this.add(new BiomeName());
+        this.add(new SearchItem());
+        this.add(new OpenBenches());
         this.setBorder(BorderFactory.createTitledBorder("Biome"));
     }
 }
@@ -87,6 +89,62 @@ class CollectButton extends JButton implements MouseListener {
         ItemStack selectedItemStack = player.getCollectables().getSelectedItemStack();
 
         player.getCollectables().moveItemStackTo(selectedItemStack, player.getInventory());
+    }
+
+    public void mouseEntered(MouseEvent event) {
+
+    }
+
+    public void mouseExited(MouseEvent event) {
+
+    }
+
+    public void mousePressed(MouseEvent event) {
+
+    }
+
+    public void mouseReleased(MouseEvent event) {
+
+    }
+}
+
+class SearchItem extends JButton implements MouseListener {
+    public SearchItem() {
+        super("Search for item");
+        this.addMouseListener(this);
+    }
+
+    public void mouseClicked(MouseEvent event) {
+        Player player = Main.game.getPlayer();
+
+        player.getCollectables().addItemStack(new ItemStack(Main.game.getBiome().getRandomCollectable(), 1));
+    }
+
+    public void mouseEntered(MouseEvent event) {
+
+    }
+
+    public void mouseExited(MouseEvent event) {
+
+    }
+
+    public void mousePressed(MouseEvent event) {
+
+    }
+
+    public void mouseReleased(MouseEvent event) {
+
+    }
+}
+
+class OpenBenches extends JButton implements MouseListener {
+    public OpenBenches() {
+        super("Workbenches");
+        this.addMouseListener(this);
+    }
+
+    public void mouseClicked(MouseEvent event) {
+        new WorkbenchesFrame();
     }
 
     public void mouseEntered(MouseEvent event) {

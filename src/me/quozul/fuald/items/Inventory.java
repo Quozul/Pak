@@ -227,4 +227,18 @@ public class Inventory {
 
         this.removeItemStack(new ItemStack(itemStack.getItem(), itemsAdded));
     }
+
+    /**
+     * Return the ItemStack of the specified item regardless of the quantity
+     * @param item to check
+     * @return the ItemStack containing this Item
+     */
+    public ItemStack containsItem(Item item) {
+        for (ItemStack itemStack : this.ITEMS) {
+            if (itemStack.getItem() == item)
+                return itemStack;
+        }
+
+        return null;
+    }
 }

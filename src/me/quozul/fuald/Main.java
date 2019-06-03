@@ -1,6 +1,7 @@
 package me.quozul.fuald;
 
 import me.quozul.fuald.swingui.JavaSwing;
+import me.quozul.fuald.swingui.PluginFrame;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -15,10 +16,9 @@ public class Main {
 
         Main.game = new Game();
 
-        if (args.length > 0) {
-            new LoadContent();
-        }
+        //new LoadContent();
 
         UI = new JavaSwing();
+        new PluginFrame();
     }
 }

@@ -1,15 +1,13 @@
 package me.quozul.fuald.swingui;
 
 import me.quozul.fuald.Entity;
-import me.quozul.fuald.events.AttackEvent;
 import me.quozul.fuald.events.DeathEvent;
-import me.quozul.fuald.items.ItemStack;
-import me.quozul.fuald.Main;
-import me.quozul.fuald.Turn;
-import me.quozul.fuald.events.NewTurnEvent;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class JavaSwing extends JFrame implements DeathEvent {
     public JavaSwing() {
@@ -24,6 +22,24 @@ public class JavaSwing extends JFrame implements DeathEvent {
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(this.buildContentPane());
+
+        // menu bar
+        JMenuBar menubar = new JMenuBar();
+        JMenu menu = new JMenu("Plugins");
+        JMenuItem size = new JMenuItem("Load plugins");
+        menu.add(size);
+        menubar.add(menu);
+        this.setJMenuBar(menubar);
+        size.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    new PluginFrame();
+                } catch (ClassNotFoundException | IOException | InstantiationException | IllegalAccessException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
         this.setVisible(true);
     }
 
